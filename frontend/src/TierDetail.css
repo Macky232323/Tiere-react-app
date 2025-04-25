@@ -1,0 +1,32 @@
+.tier-detail-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .tier-detail-heading {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .tier-detail-info {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .back-button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .back-button:hover {
+    background-color: #3e8e41;
+  }

@@ -5,7 +5,8 @@ const cors = require("cors");
 
 
 db.serialize(() => {
-  createTableQuery = `CREATE TABLE IF NOT EXISTS tiere (
+  createTableQuery = `
+        CREATE TABLE IF NOT EXISTS tiere (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         tierart TEXT NOT NULL,
         name TEXT NOT NULL,
@@ -15,9 +16,23 @@ db.serialize(() => {
     )`;
   db.run(createTableQuery); // REAL steht für Float Zahlen (5.5)
 
-  insertQuery = `INSERT INTO tiere (tierart,name,krankheit,geburtstag,gewicht) VALUES("Hund","Rudolfo","Fieber","01.01.2000",3.2),("Katze","Haku","Keine","01.08.2021",4.5) `;
+  insertQuery = `INSERT INTO tiere (tierart, name, krankheit, geburtstag, gewicht)
+VALUES
+    ('Hund', 'Buddy', 'Keine', '2019-05-10', 25.5),
+    ('Katze', 'Whiskers', 'Haarballen', '2020-03-15', 4.2),
+    ('Hund', 'Max', 'Allergie', '2018-11-20', 30.1),
+    ('Katze', 'Lucy', 'Keine', '2021-01-28', 3.8),
+    ('Vogel', 'Tweety', 'Milben', '2022-09-01', 0.1),
+    ('Hase', 'Bugs', 'Keine', '2021-06-12', 2.0),
+    ('Hund', 'Charlie', 'Husten', '2020-12-05', 27.0),
+    ('Katze', 'Chloe', 'Erkältung', '2019-08-18', 4.0),
+    ('Vogel', 'Rocky', 'Keine', '2023-02-22', 0.12),
+    ('Hase', 'Lola', 'Verdauungsprobleme', '2022-04-07', 2.3),
+    ('Hund', 'Toby', 'Keine', '2017-07-03', 32.8),
+    ('Katze', 'Misty', 'Keine', '2021-10-14', 3.5),
+    ('Fisch', 'Nemo', 'Schimmel', '2023-01-01', 0.02); `;
 
-  db.run(insertQuery);
+  // db.run(insertQuery);
 
   selectQuery = `SELECT * FROM tiere`;
 

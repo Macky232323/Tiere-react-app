@@ -1,40 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import TierTabelle from './TierTabelle';
+import TierDetail from './TierDetail';
 import './App.css';
 
 function App() {
-  const [Tiere, setTiere] = useState([]);
+  const [tiere, setTiere] = useState([]);
+  const [ladeFehler, setLadeFehler] = useState(null);
+  const { id } = useParams();
+
   useEffect(() => {
-    async function getTiere() {
-      const response = await fetch('http://localhost:5005/tiere');
-      const data = await response.json();
-      setTiere(data);
-      console.log(data);
-    }
-    getTiere()   
-    
-  },[]);
-  if (!Tiere) {
-    return <p>Loading...</p>
-}
+    fetch('http://localhost:5005/tiere')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Daten holen hat nicht geklappt!');
+        }
+        return response.json();
+      })
+      .then(daten => {
+        setTiere(daten);
+      })
+      .catch(fehler => {
+        setLadeFehler(fehler.message);
+      });
+  }, []);
+
+  if (ladeFehler) {
+    return <div>Fehler: {ladeFehler}</div>;
+  }
+
+  if (id) {
+    return <TierDetail tiere={tiere} id={id} />;
+  }
+
   return (
-    <div className="App">
-      <h1>Liste aller Tiere</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Art</th>
-            <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-          {Tiere.map((tier) => (
-            <tr key={tier.id}>
-              <td>{tier.tierart}</td>
-              <td>{tier.name}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <h1>Tierliste</h1>
+      {tiere.length > 0 ? (
+        <TierTabelle tiere={tiere} />
+      ) : (
+        <div>Daten werden geladen...</div>
+      )}
     </div>
   );
 }
