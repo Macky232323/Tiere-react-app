@@ -9,9 +9,6 @@ function TierTabelle({ tiere }) {
         <tr>
           <th>Tierart</th>
           <th>Name</th>
-          <th>Krankheit</th>
-          <th>Geburtstag</th>
-          <th>Gewicht</th>
         </tr>
       </thead>
       <tbody>
@@ -19,9 +16,6 @@ function TierTabelle({ tiere }) {
           <tr key={tier.id}>
             <td><Link to={`/tiere/${tier.id}`}>{tier.tierart}</Link></td>
             <td><Link to={`/tiere/${tier.id}`}>{tier.name}</Link></td>
-            <td>{tier.krankheit}</td>
-            <td>{tier.geburtstag}</td>
-            <td>{tier.gewicht}</td>
           </tr>
         ))}
       </tbody>

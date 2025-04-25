@@ -6,41 +6,23 @@ import './App.css';
 
 function App() {
   const [tiere, setTiere] = useState([]);
-  const [ladeFehler, setLadeFehler] = useState(null);
+  const [fehler, setFehler] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
     fetch('http://localhost:5005/tiere')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Daten holen hat nicht geklappt!');
-        }
-        return response.json();
-      })
-      .then(daten => {
-        setTiere(daten);
-      })
-      .catch(fehler => {
-        setLadeFehler(fehler.message);
-      });
+      .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
+      .then(setTiere)
+      .catch(err => setFehler(err));
   }, []);
 
-  if (ladeFehler) {
-    return <div>Fehler: {ladeFehler}</div>;
-  }
-
-  if (id) {
-    return <TierDetail tiere={tiere} id={id} />;
-  }
+  if (fehler) return <div>Fehler: {fehler}</div>;
+  if (id) return <TierDetail tiere={tiere} id={id} />;
 
   return (
     <div>
       <h1>Tierliste</h1>
-      {tiere.length > 0 ? (
-        <TierTabelle tiere={tiere} />
-      ) : (
-        <div>Daten werden geladen...</div>
-      )}
+      {tiere.length ? <TierTabelle tiere={tiere} /> : <div>Daten werden geladen...</div>}
     </div>
   );
 }
